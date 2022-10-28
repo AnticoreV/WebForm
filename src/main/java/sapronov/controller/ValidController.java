@@ -9,8 +9,14 @@ import java.io.IOException;
 @WebServlet(name = "ValidController", value = "/main-view")
 public class ValidController extends HttpServlet {
     //policy_number requires minimum 8 characters
-    private boolean isValidLength(String pass){
-        if(pass.length() < 8){
+    private boolean isMinValidLength(String pass, int length){
+        if(pass.length() < length){
+            return false;
+        }else return true;
+    }
+    //area request can have maximum 5000 characters
+    private boolean isMaxValidLength(String pass, int length){
+        if(pass.length() > length){
             return false;
         }else return true;
     }
@@ -47,9 +53,10 @@ public class ValidController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher;
-        if(!(isValidLength(req.getParameter("Policy_Number"))
+        if(!(isMinValidLength(req.getParameter("Policy_Number"),8)
                 && (isValidSymbols(req.getParameter("Policy_Number")))
-                && (isValidSymbols(req.getParameter("Name"), req.getParameter("Surname"))))){
+                && (isValidSymbols(req.getParameter("Name"), req.getParameter("Surname")))
+                && isMaxValidLength(req.getParameter("Area"), 5000))){
             requestDispatcher = req.getRequestDispatcher("/index.jsp");
             requestDispatcher.forward(req, resp);
         }

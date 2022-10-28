@@ -34,7 +34,7 @@ Your Request
     }
 </style>
 <br>
-<textarea  id="area" name="area" rows="4" cols="50"></textarea>
+<textarea  id="area" name="Area" rows="4" cols="50"></textarea>
 <br/>
 <input type="submit" value="SEND REQUEST">
 </form>
