@@ -7,10 +7,11 @@
 <body>
 <h1>Contact us</h1>
 <label>Kind of Request</label><br>
+<form action="main-view" method="post">
 <select name="kind_req" id="type">
-        <option value="Contract_Adjustment">Contract Adjustment</option>
-        <option value="Damage_Case">Damage Case</option>
-        <option value="Complaint">Complaint</option>
+        <option value="Contract_Adjustment" name="CA">Contract Adjustment</option>
+        <option value="Damage_Case" name="DC">Damage Case</option>
+        <option value="Complaint" name="CM">Complaint</option>
 </select>
 <br>
 Policy Number
@@ -33,8 +34,9 @@ Your Request
     }
 </style>
 <br>
-<textarea id="area" name="area" rows="4" cols="50"></textarea>
+<textarea  id="area" name="area" rows="4" cols="50"></textarea>
 <br/>
 <input type="submit" value="SEND REQUEST">
+</form>
 </body>
 </html>
