@@ -4,9 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 @WebServlet(name = "ValidController", value = "/main-view")
 public class ValidController extends HttpServlet {
@@ -32,6 +30,7 @@ public class ValidController extends HttpServlet {
         }
     //name and surname contains only letters
     private boolean isValidSymbols(String name, String surname){
+        if(name == null || surname == null)return false;
         for(int i = 0; i < name.length(); i++){
             if (name.charAt(i) > 96 && name.charAt(i) < 123) {}
             else if (name.charAt(i) > 64 && name.charAt(i) < 91) {}
@@ -47,7 +46,14 @@ public class ValidController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
+        RequestDispatcher requestDispatcher;
+        if(!(isValidLength(req.getParameter("Policy_Number"))
+                && (isValidSymbols(req.getParameter("Policy_Number")))
+                && (isValidSymbols(req.getParameter("Name"), req.getParameter("Surname"))))){
+            requestDispatcher = req.getRequestDispatcher("/index.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+        requestDispatcher = req.getRequestDispatcher("/MainController");
+        requestDispatcher.forward(req, resp);
     }
 }
