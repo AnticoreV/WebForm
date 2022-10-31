@@ -1,5 +1,6 @@
 package sapronov.controller;
 
+import sapronov.service.ValidateService;
 import sapronov.util.ValidationUtil;
 
 import javax.servlet.*;
@@ -14,14 +15,16 @@ public class ValidController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher;
-        if(!(valid.isMinValidLength(req.getParameter("Policy_Number"),8)
-                && (valid.isValidSymbols(req.getParameter("Policy_Number")))
-                && (valid.isValidSymbols(req.getParameter("Name"), req.getParameter("Surname")))
-                && valid.isMaxValidLength(req.getParameter("Area"), 5000))){
-            requestDispatcher = req.getRequestDispatcher("/index.jsp");
+        ValidateService validateService = new ValidateService();
+        if(validateService.isValidData(
+                req.getParameter("Policy_Number"),
+                req.getParameter("Name"),
+                req.getParameter("Surname"),
+                req.getParameter("Area"))){
+            requestDispatcher = req.getRequestDispatcher("/MainController");
             requestDispatcher.forward(req, resp);
         }
-        requestDispatcher = req.getRequestDispatcher("/MainController");
+        requestDispatcher = req.getRequestDispatcher("/index.jsp");
         requestDispatcher.forward(req, resp);
     }
 }

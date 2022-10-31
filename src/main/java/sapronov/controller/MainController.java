@@ -2,6 +2,8 @@ package sapronov.controller;
 
 import sapronov.model.Request;
 import sapronov.model.User;
+import sapronov.repository.UserRepositoryImpl;
+import sapronov.service.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,26 +31,16 @@ public class MainController extends HttpServlet {
          String pol_num = user.getPolicyNumber();
          String name = user.getName();
          String surname = user.getSurname();
-         try{
-            String url = "jdbc:mysql://localhost/webform";
-            String username = "root";
-            String password = "H78f6bf6ddes3dr9245";
-            Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
-                Statement statement = conn.createStatement();
-                statement.executeUpdate("INSERT INTO users" +
-                        " (policy_number, name, surname) VALUES " +
-                        " ('"+pol_num+"', '"+name+"', '"+surname+"')");
-                statement.executeUpdate("INSERT INTO requests" +
-                        " (data) VALUES " +
-                        " ('"+req_text+"')");
-                System.out.println("Successful");
-                statement.close();
-            }
-         }
-         catch(Exception e){
-            System.out.println("Connection failed...");
-            System.out.println(e);
-         }
+
+        UserService userService = new UserService();
+        try {
+            userService.save(pol_num, name, surname);
+            userService.save(req_text);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        RequestDispatcher requestDispatcher;
+        requestDispatcher = req.getRequestDispatcher("/view/welcome.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }

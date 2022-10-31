@@ -3,9 +3,6 @@ package sapronov.repository;
 import java.sql.SQLException;
 
 public interface UserRepository {
-    void createTable() throws SQLException;
-    void createForeignKey() throws SQLException;
-    void createExtraConstraints() throws SQLException;
-    void save() throws SQLException;
-    void update() throws SQLException;
+    void saveUser(String pol_num, String name, String surname) throws Exception;
+    void saveRequest(String req_text) throws Exception;
 }
