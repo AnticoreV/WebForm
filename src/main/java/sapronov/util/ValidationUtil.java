@@ -6,7 +6,7 @@ public class ValidationUtil {
     private ValidationUtil(){}
 
     public static ValidationUtil getInstance(){
-        if(validationUtil != null){
+        if(validationUtil == null){
             validationUtil = new ValidationUtil();
         }
         return validationUtil;

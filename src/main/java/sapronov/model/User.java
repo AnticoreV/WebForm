@@ -1,27 +1,40 @@
 package sapronov.model;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Objects;
 
 public class User {
-    private List<String> identity = new LinkedList<>();
+    private String policyNumber;
+    private String name;
+    private String surname;
+
     public User(String pass, String name, String surname){
-        identity.add(pass);
-        identity.add(name);
-        identity.add(surname);
+        this.policyNumber = pass;
+        this.name = name;
+        this.surname = surname;
     }
 
     public String getPolicyNumber() {
-        return identity.get(0);
+        return policyNumber;
     }
     public String getName() {
-        return identity.get(1);
+        return name;
     }
     public String getSurname() {
-        return identity.get(2);
+        return surname;
     }
 
-    public List<String> getIdentity() {
-        return identity;
+    @Override
+    public int hashCode() {
+        return Objects.hash(policyNumber, name, surname);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this==obj){return true;}
+        if (obj == null || this.getClass() != obj.getClass()) return false;
+        User user = (User)obj;
+        return user.getPolicyNumber() == this.policyNumber
+                && user.getName() == this.name
+                && user.getSurname() == this.surname;
     }
 }
