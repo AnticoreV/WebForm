@@ -12,8 +12,8 @@ public class InitDB {
     }
     public Connection init() throws Exception{
         String url = "jdbc:mysql://localhost/webform";
-        String username = "root";
-        String password = "H78f6bf6ddes3dr9245";
+        String username = "user";
+        String password = "pass";
         Class.forName("com.mysql.cj.jdbc.Driver").getDeclaredConstructor().newInstance();
         return DriverManager.getConnection(url, username, password);
     }
